@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Sets up Nginx like web-01 and adds an X-Served-By header with the server's hostname
+apt-get -y update
+apt-get -y install nginx
+echo "Holberton School for the win!" > /var/www/html/index.html
+echo "Ceci n'est pas une page" > /var/www/html/404.html
+CONFIG=/etc/nginx/sites-available/default
+if ! grep -q "redirect_me" "$CONFIG"; then
+sed -i '/listen 80 default_server;/a location /redirect_me { return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4; }' "$CONFIG"
+fi
+if ! grep -q "error_page 404" "$CONFIG"; then
+sed -i '/listen 80 default_server;/a error_page 404 /404.html;' "$CONFIG"
+fi
+if ! grep -q "X-Served-By" "$CONFIG"; then
+sed -i "/listen 80 default_server;/a add_header X-Served-By \$hostname;" "$CONFIG"
+fi
+service nginx restart

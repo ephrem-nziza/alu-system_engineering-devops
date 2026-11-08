@@ -1,99 +1,252 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>404 - Ceci n'est pas une page</title>
-<style>
-  :root {
-    --sky: #c9dce8;
-    --sky-deep: #9fbdd0;
-    --ink: #1c2a35;
-    --paper: #fbfaf5;
-    --green: #2f5d50;
-  }
-  @media (prefers-color-scheme: dark) {
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 | Ceci n'est pas une page</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+ 
     :root {
-      --sky: #1b2a36;
-      --sky-deep: #243746;
-      --ink: #e8eef2;
-      --paper: #2b3d4b;
-      --green: #8cc7b3;
+      --ink: #111;
+      --paper: #fafafa;
+      --line: #dbdbdb;
+      --blue: #0095f6;
+      --blue-dark: #1877f2;
+      --hand: "Segoe Print", "Bradley Hand", "Marker Felt", "Chalkboard SE", "Comic Sans MS", cursive;
+      --sans: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
     }
-  }
-  * { box-sizing: border-box; }
-  html, body { height: 100%; margin: 0; }
-  body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-    background: linear-gradient(180deg, var(--sky) 0%, var(--sky-deep) 100%);
-    color: var(--ink);
-    font-family: Georgia, "Times New Roman", serif;
-    text-align: center;
-  }
-  main { max-width: 34rem; }
-  .sheet {
-    width: 150px;
-    height: auto;
-    transform: rotate(-4deg);
-    filter: drop-shadow(0 14px 12px rgba(0, 0, 0, 0.18));
-    animation: drift 6s ease-in-out infinite;
-  }
-  .sheet .page { fill: var(--paper); stroke: var(--ink); stroke-width: 2; }
-  .sheet .fold { fill: var(--sky-deep); stroke: var(--ink); stroke-width: 2; }
-  .sheet .scribble { stroke: var(--ink); stroke-width: 2; stroke-linecap: round; fill: none; opacity: 0.55; }
-  @keyframes drift {
-    0%, 100% { transform: rotate(-4deg) translateY(0); }
-    50% { transform: rotate(-2deg) translateY(-10px); }
-  }
-  h1 {
-    margin: 18px 0 4px;
-    font-size: clamp(4.5rem, 20vw, 8rem);
-    line-height: 1;
-    font-weight: 400;
-    letter-spacing: -0.04em;
-  }
-  .quote {
-    margin: 0 0 20px;
-    font-size: clamp(1.4rem, 5vw, 2rem);
-    font-style: italic;
-    color: var(--green);
-  }
-  p { margin: 0 auto 28px; max-width: 28rem; font-size: 1.05rem; line-height: 1.6; }
-  a {
-    display: inline-block;
-    padding: 12px 26px;
-    border: 2px solid var(--ink);
-    border-radius: 999px;
-    color: var(--ink);
-    font-family: inherit;
-    font-size: 1rem;
-    text-decoration: none;
-    transition: background 0.2s, color 0.2s;
-  }
-  a:hover, a:focus-visible { background: var(--ink); color: var(--sky); outline: none; }
-  a:focus-visible { box-shadow: 0 0 0 4px var(--green); }
-  @media (prefers-reduced-motion: reduce) {
-    .sheet { animation: none; }
-    a { transition: none; }
-  }
-</style>
+ 
+    html, body { height: 100%; }
+ 
+    body {
+      font-family: var(--sans);
+      color: var(--ink);
+      background-color: var(--paper);
+      background-image: radial-gradient(#cfcfcf 1px, transparent 1px);
+      background-size: 24px 24px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+ 
+    /* Top bar */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px clamp(16px, 4vw, 48px);
+      background: #fff;
+      border-bottom: 1px solid var(--line);
+    }
+    .brand {
+      font-family: var(--hand);
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--ink);
+      text-decoration: none;
+      transform: rotate(-2deg);
+      display: inline-block;
+    }
+    .topbar .btn { padding: 7px 16px; }
+ 
+    /* Full page stage */
+    .stage {
+      position: relative;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: clamp(24px, 5vh, 64px) clamp(16px, 4vw, 48px);
+    }
+ 
+    /* Doodles scattered over the whole page */
+    .doodles {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+ 
+    .draw {
+      fill: none;
+      stroke: var(--ink);
+      stroke-width: 4;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 1;
+      stroke-dashoffset: 1;
+      animation: draw 1.6s ease-out forwards;
+    }
+    .thin { stroke-width: 2; }
+    .d2 { animation-delay: 0.5s; }
+    .d3 { animation-delay: 1s; }
+    .d4 { animation-delay: 1.5s; }
+    .d5 { animation-delay: 2s; }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+ 
+    .big404 {
+      position: relative;
+      width: min(92vw, 1000px);
+      height: auto;
+      z-index: 1;
+    }
+ 
+    .scribble-text {
+      font-family: var(--hand);
+      fill: var(--ink);
+      opacity: 0;
+      animation: fade 0.6s ease-out forwards;
+      animation-delay: 2.4s;
+    }
+    @keyframes fade { to { opacity: 1; } }
+ 
+    .copy {
+      position: relative;
+      z-index: 1;
+      max-width: 620px;
+      margin-top: clamp(8px, 2vh, 24px);
+    }
+ 
+    h1 {
+      font-family: var(--hand);
+      font-size: clamp(30px, 5.5vw, 56px);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 14px;
+    }
+ 
+    p {
+      font-size: clamp(16px, 2vw, 19px);
+      line-height: 1.6;
+      color: #262626;
+    }
+ 
+    .actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 28px;
+    }
+ 
+    .btn {
+      display: inline-block;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      text-align: center;
+      transition: background 0.15s ease, transform 0.1s ease;
+    }
+    .btn:active { transform: scale(0.97); }
+    .btn.primary { background: var(--blue); color: #fff; }
+    .btn.primary:hover { background: var(--blue-dark); }
+    .btn.secondary { background: #fff; color: var(--blue); border: 1px solid var(--blue); }
+    .btn.secondary:hover { background: #f0f8ff; }
+    .btn:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+ 
+    footer {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 14px clamp(16px, 4vw, 48px);
+      background: #fff;
+      border-top: 1px solid var(--line);
+      font-size: 13px;
+      color: #737373;
+    }
+    footer span:first-child { font-family: var(--hand); }
+ 
+    @media (max-width: 640px) {
+      .doodles { opacity: 0.5; }
+    }
+ 
+    @media (prefers-reduced-motion: reduce) {
+      .draw { animation: none; stroke-dashoffset: 0; }
+      .scribble-text { animation: none; opacity: 1; }
+    }
+  </style>
 </head>
 <body>
-<main>
-  <svg class="sheet" viewBox="0 0 150 190" role="img" aria-label="A blank sheet of paper with a folded corner">
-    <path class="page" d="M10 8 H105 L142 45 V182 H10 Z"/>
-    <path class="fold" d="M105 8 V45 H142 Z"/>
-    <path class="scribble" d="M30 80 q10 -8 20 0 t20 0 t20 0"/>
-    <path class="scribble" d="M30 108 q10 -8 20 0 t20 0"/>
-    <path class="scribble" d="M30 136 q10 -8 20 0 t20 0 t20 0 t10 0"/>
-  </svg>
-  <h1>404</h1>
-  <p class="quote">Ceci n'est pas une page.</p>
-  <p>The address you asked for does not lead anywhere. It may have moved, or it may never have existed. Either way, there is nothing to read here.</p>
-  <a href="/">Back to the home page</a>
-</main>
+  <header class="topbar">
+    <a class="brand" href="/">lost.and.found</a>
+    <a class="btn primary" href="/">Log back in</a>
+  </header>
+ 
+  <main class="stage">
+    <!-- background doodles spread across the full page -->
+    <svg class="doodles" viewBox="0 0 1440 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <defs>
+        <filter id="wobble2" x="-5%" y="-5%" width="110%" height="110%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="3" result="n"/>
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="6"/>
+        </filter>
+      </defs>
+      <g filter="url(#wobble2)">
+        <!-- star, top left -->
+        <path class="draw thin d2" pathLength="1" d="M130 120 L150 170 L204 174 L162 208 L176 260 L130 232 L84 260 L98 208 L56 174 L110 170 Z"/>
+        <!-- spiral, bottom left -->
+        <path class="draw thin d3" pathLength="1" d="M180 640 C140 600 90 640 110 690 C140 750 230 720 220 650 C205 570 100 560 70 640"/>
+        <!-- squiggle, top right -->
+        <path class="draw thin d3" pathLength="1" d="M1200 110 q20 -40 40 0 t40 0 t40 0 t40 0 t40 0"/>
+        <!-- circle scribble, right -->
+        <path class="draw thin d4" pathLength="1" d="M1290 520 C1240 470 1160 520 1180 590 C1200 660 1320 650 1330 570 C1336 510 1270 470 1210 490"/>
+        <!-- little arrow, bottom right -->
+        <path class="draw thin d5" pathLength="1" d="M1130 700 C1190 740 1260 740 1320 700 M1296 680 L1322 700 L1292 722"/>
+        <!-- crosses -->
+        <path class="draw thin d4" pathLength="1" d="M360 90 L392 122 M392 90 L360 122"/>
+        <path class="draw thin d5" pathLength="1" d="M1050 640 L1082 672 M1082 640 L1050 672"/>
+      </g>
+    </svg>
+ 
+    <svg class="big404" viewBox="0 0 900 320" role="img" aria-label="The number 404 drawn by hand, with a small sad face inside the zero">
+      <defs>
+        <filter id="wobble" x="-5%" y="-5%" width="110%" height="110%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="7" result="n"/>
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="7"/>
+        </filter>
+      </defs>
+      <g filter="url(#wobble)">
+        <!-- first 4 -->
+        <path class="draw" pathLength="1" style="stroke-width:14" d="M215 30 L70 205 L260 200 M205 120 L200 290"/>
+        <!-- 0 -->
+        <path class="draw d2" pathLength="1" style="stroke-width:14" d="M450 24 C340 28 330 290 450 296 C570 292 570 28 450 24 Z"/>
+        <!-- last 4 -->
+        <path class="draw d3" pathLength="1" style="stroke-width:14" d="M820 30 L675 205 L865 200 M810 120 L805 290"/>
+        <!-- sad face -->
+        <path class="draw d4" pathLength="1" style="stroke-width:9" d="M412 126 L412 148 M488 126 L488 148"/>
+        <path class="draw d4" pathLength="1" style="stroke-width:9" d="M405 222 C430 190 470 190 495 222"/>
+        <!-- underline -->
+        <path class="draw d5" pathLength="1" style="stroke-width:5" d="M120 312 C320 304 560 316 790 308"/>
+      </g>
+      <text class="scribble-text" x="640" y="26" font-size="22" transform="rotate(4 640 26)">nothing to see here</text>
+    </svg>
+ 
+    <div class="copy">
+      <h1>Ceci n'est pas une page</h1>
+      <p>
+        The address you typed does not lead anywhere. The page may have moved,
+        been deleted, or never existed. Check the URL for typos, or go back to
+        a page that does exist.
+      </p>
+      <div class="actions">
+        <a class="btn primary" href="/">Back to home</a>
+        <a class="btn secondary" href="javascript:history.back()">Go back</a>
+      </div>
+    </div>
+  </main>
+ 
+  <footer>
+    <span>Error 404 &middot; Page not found</span>
+    <span>Drawn by hand, served by nginx</span>
+  </footer>
 </body>
 </html>
+ 
